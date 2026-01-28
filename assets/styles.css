@@ -143,10 +143,18 @@ li{ margin: 6px 0; }
   color: #666;
   text-decoration: none;
 }
-
 .contact-link:hover,
 .contact-link:focus {
   color: #444;
   text-decoration: underline;
+  outline: none;
+}
+.contact-link,
+.contact-link:visited,
+.contact-link:hover,
+.contact-link:focus,
+.contact-link:active {
+  color: #666;
+  text-decoration: none;
   outline: none;
 }
