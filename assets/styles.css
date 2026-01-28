@@ -138,14 +138,20 @@ li{ margin: 6px 0; }
   .site-title{ font-size: 1.9rem; }
   .embed{ height: 720px; }
 }
-}
-.contacts a,
-.contacts a:link,
-.contacts a:visited,
-.contacts a:hover,
-.contacts a:focus,
-.contacts a:active {
+a.contact-link:link,
+a.contact-link:visited {
   color: #666 !important;
   text-decoration: none !important;
+}
+
+a.contact-link:hover,
+a.contact-link:focus {
+  color: #666 !important;
+  text-decoration: underline !important;
   outline: none;
+}
+
+.small {
+  font-size: 0.9em;
+  opacity: 0.85;
 }
