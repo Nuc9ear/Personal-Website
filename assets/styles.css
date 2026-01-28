@@ -138,23 +138,12 @@ li{ margin: 6px 0; }
   .site-title{ font-size: 1.9rem; }
   .embed{ height: 720px; }
 }
-.contact-link,
-.contact-link:visited {
-  color: #666;
-  text-decoration: none;
-}
-.contact-link:hover,
-.contact-link:focus {
-  color: #444;
-  text-decoration: underline;
-  outline: none;
-}
-.contact-link,
-.contact-link:visited,
-.contact-link:hover,
-.contact-link:focus,
-.contact-link:active {
-  color: #666;
-  text-decoration: none;
+a.contact-link,
+a.contact-link:visited,
+a.contact-link:hover,
+a.contact-link:focus,
+a.contact-link:active {
+  color: #666 !important;
+  text-decoration: none !important;
   outline: none;
 }
