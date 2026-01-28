@@ -138,15 +138,11 @@ li{ margin: 6px 0; }
   .site-title{ font-size: 1.9rem; }
   .embed{ height: 720px; }
 }
-.contact-link,
-.contact-link:visited {
-  color: #666;
-  text-decoration: none;
-}
-
-.contact-link:hover,
-.contact-link:focus {
-  color: #444;
-  text-decoration: underline;
-  outline: none;
+.contact a,
+.contact a:link,
+.contact a:visited,
+.contact a:hover,
+.contact a:focus,
+.contact a:active {
+  text-decoration: none !important;
 }
