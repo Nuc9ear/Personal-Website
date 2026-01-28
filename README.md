@@ -1,6 +1,6 @@
-# Egor academic webpage (GitHub Pages)
+# Egor Webpage (GitHub Pages)
 
-This is a minimal multi-page site inspired by samuel-drapeau.info, implemented with plain HTML/CSS/JS.
+This is a minimal multi-page site implemented with plain HTML/CSS/JS.
 
 ## Structure
 - `index.html` — Home
