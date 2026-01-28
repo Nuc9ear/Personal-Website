@@ -147,3 +147,13 @@ a.contact-link:active {
   text-decoration: none !important;
   outline: none;
 }
+.contacts a,
+.contacts a:link,
+.contacts a:visited,
+.contacts a:hover,
+.contacts a:focus,
+.contacts a:active {
+  color: #666 !important;
+  text-decoration: none !important;
+  outline: none;
+}
