@@ -310,3 +310,30 @@ li{ margin: 6px 0; }
 @media (max-width:680px){
   .hon{ grid-template-columns: 1fr !important; }
 }
+/* ===== ACHIEVEMENTS GRID (same style) ===== */
+.ach{
+  display:grid !important;
+  grid-template-columns: 170px 1fr !important;
+  gap: 10px 18px !important;
+  margin: 10px 0 14px !important;
+}
+
+.ach .dates{
+  font-family: var(--mono);
+  color: var(--muted);
+  line-height: 1.35;
+}
+.ach .dates .when{ font-weight:700; color:var(--fg); }
+
+.ach .item .school{ font-weight:700; }
+
+.ach .bullets{
+  margin: 6px 0 0 18px;
+}
+.ach .bullets li{
+  margin: 6px 0;
+}
+
+@media (max-width:680px){
+  .ach{ grid-template-columns: 1fr !important; }
+}
