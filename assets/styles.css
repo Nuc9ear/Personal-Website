@@ -259,7 +259,7 @@ li{ margin: 6px 0; }
     height: 96px;
     border-radius: 14px;
     object-fit: cover;
-    object-position: 50% 18%; /* лицо выше */
+    object-position: 50% 18%; /* photo up */
     flex: 0 0 auto;
   }
 
@@ -275,7 +275,7 @@ li{ margin: 6px 0; }
     margin: 0 0 6px;
   }
 
-  /* ✅ уменьшаем био на телефоне */
+  /* Bio reduction */
   .taglines{
     margin: 0 0 10px;
     font-size: 0.92rem;
