@@ -216,4 +216,33 @@ li{ margin: 6px 0; }
   padding: 2px 8px;
   line-height: 1.2;
 }
+/* ===== EXPERIENCE GRID (same style as Education) ===== */
+.exp{
+  display:grid !important;
+  grid-template-columns: 170px 1fr !important;
+  gap: 10px 18px !important;
+  margin: 10px 0 14px !important;
+}
+
+.exp .dates{
+  font-family: var(--mono);
+  color: var(--muted);
+  line-height: 1.35;
+}
+.exp .dates .when{ font-weight:700; color:var(--fg); }
+.exp .dates .where{ font-style:italic; }
+
+.exp .item .school{ font-weight:700; }
+.exp .item .degree{ margin-top:2px; }
+
+.exp .bullets{
+  margin: 6px 0 0 18px;
+}
+.exp .bullets li{
+  margin: 6px 0;
+}
+
+@media (max-width:680px){
+  .exp{ grid-template-columns:1fr !important; }
+}
 
