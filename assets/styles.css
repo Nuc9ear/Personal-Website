@@ -200,7 +200,7 @@ li{ margin: 6px 0; }
 }
 
 .courses-label{
-  font-style: italic;
+  font-style: normal;
   color: var(--muted);
   font-family: var(--mono);
   white-space: nowrap; /* чтобы "Relevant coursework:" не уезжало отдельно */
