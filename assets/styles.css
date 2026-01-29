@@ -337,3 +337,10 @@ li{ margin: 6px 0; }
 @media (max-width:680px){
   .ach{ grid-template-columns: 1fr !important; }
 }
+/* Languages card: remove big top space */
+.lang-card h3{
+  margin: 0 0 6px;   /* было 18px сверху из общего h3 */
+}
+.lang-card{
+  padding-top: 12px; /* можешь поставить 10px если хочешь ещё плотнее */
+}
