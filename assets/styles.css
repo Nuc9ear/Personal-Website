@@ -190,3 +190,15 @@ li{ margin: 6px 0; }
 @media (max-width:680px){
   .edu{ grid-template-columns:1fr !important; }
 }
+/* Smaller pills for education coursework */
+.pills.small{
+  gap:6px;
+  margin-top:6px;
+}
+
+.pills.small .pill{
+  font-size: .82rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  line-height: 1.2;
+}
