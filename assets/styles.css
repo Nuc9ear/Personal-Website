@@ -245,3 +245,45 @@ li{ margin: 6px 0; }
 @media (max-width:680px){
   .exp{ grid-template-columns:1fr !important; }
 }
+/* ===== Mobile header: photo LEFT, text RIGHT, full width ===== */
+@media (max-width: 520px){
+  .header-row{
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .header-photo{
+    width: 96px;
+    height: 96px;
+    border-radius: 14px;
+    object-fit: cover;
+    object-position: 50% 18%; /* лицо выше */
+    flex: 0 0 auto;
+  }
+
+  .header-content{
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: left;
+  }
+
+  .site-title{
+    font-size: 1.9rem;
+    line-height: 1.15;
+    margin: 0 0 6px;
+  }
+
+  .taglines{
+    margin: 0 0 10px;
+    line-height: 1.35;
+  }
+
+  .nav{
+    justify-content: flex-start;
+    margin: 10px 0 18px;
+    gap: 12px;
+  }
+}
