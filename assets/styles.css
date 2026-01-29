@@ -190,20 +190,20 @@ li{ margin: 6px 0; }
 @media (max-width:680px){
   .edu{ grid-template-columns:1fr !important; }
 }
-/* Smaller pills for education coursework */
+/* Relevant coursework line */
 .courses-line{
   margin-top: 4px;
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap; /* pills могут переноситься, но label остаётся с ними в одной линии */
+  flex-wrap: wrap;
 }
 
 .courses-label{
-  font-style: normal;
+  font-style: normal;      /* НЕ курсив */
   color: var(--muted);
   font-family: var(--mono);
-  white-space: nowrap; /* чтобы "Relevant coursework:" не уезжало отдельно */
+  white-space: nowrap;
 }
 
 /* Smaller pills for coursework */
@@ -217,7 +217,6 @@ li{ margin: 6px 0; }
 .pills.small .pill{
   font-size: .82rem;
   padding: 2px 8px;
-  border-radius: 999px;
   line-height: 1.2;
 }
 
