@@ -191,14 +191,16 @@ li{ margin: 6px 0; }
   .edu{ grid-template-columns:1fr !important; }
 }
 /* Smaller pills for education coursework */
-.pills.small{
-  gap:6px;
-  margin-top:6px;
+.courses-line{
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.courses-label{
+  font-style: italic;
+  color: var(--muted);
+  font-family: var(--mono);
 }
 
-.pills.small .pill{
-  font-size: .82rem;
-  padding: 2px 8px;
-  border-radius: 999px;
-  line-height: 1.2;
-}
