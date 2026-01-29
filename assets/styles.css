@@ -347,3 +347,21 @@ li{ margin: 6px 0; }
   0%,50%{ opacity:1; }
   50.01%,100%{ opacity:0; }
 }
+/* Skills grid = same style as Education/Experience */
+.skills{
+  display:grid !important;
+  grid-template-columns: 170px 1fr !important;
+  gap: 10px 18px !important;
+  margin: 10px 0 14px !important;
+}
+
+.skills .dates{
+  font-family: var(--mono);
+  color: var(--muted);
+  line-height: 1.35;
+}
+.skills .dates .when{ font-weight:700; color:var(--fg); }
+
+@media (max-width:680px){
+  .skills{ grid-template-columns:1fr !important; }
+}
