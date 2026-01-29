@@ -154,21 +154,18 @@ li{ margin: 6px 0; }
 .header-photo{
   display:block;
   flex:0 0 auto;
-  width:120px;
-  height:120px;
+  width:160px;      /* было 120 */
+  height:160px;     /* было 120 */
   object-fit:cover;
   object-position:50% 20%;
-  border-radius:12px;
+  border-radius:14px; /* чуть больше, чтобы красиво */
   border:1px solid rgba(0,0,0,.12);
-  background:#f2f2f2; /* чтобы точно было видно рамку */
+  background:#f2f2f2;
 }
-.header-content{
-  flex:1;
-  min-width:0;
-}
+
 @media (max-width:700px){
   .header-row{ gap:14px; }
-  .header-photo{ width:72px; height:72px; }
+  .header-photo{ width:96px; height:96px; } /* было 72 */
 }
 /* ===== EDUCATION GRID (force) ===== */
 .edu{
