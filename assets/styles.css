@@ -172,3 +172,41 @@ li{ margin: 6px 0; }
 }
 .header-row{ display:flex; align-items:flex-start; gap:28px; }
 .header-photo{ display:block; flex:0 0 auto; width:120px; height:120px; object-fit:cover; object-position:50% 20%; border-radius:12px; border:1px solid rgba(0,0,0,.12); }
+.edu{
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 10px 18px;
+  margin: 10px 0 14px;
+}
+/*Education layout*/
+.edu .dates{
+  font-family: var(--mono);
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.edu .dates .when{
+  font-weight: 700;
+  color: var(--fg);
+}
+.edu .dates .where{
+  font-style: italic;
+}
+.edu .item .school{
+  font-weight: 700;
+}
+.edu .item .degree{
+  margin-top: 2px;
+}
+.edu .item .meta{
+  margin-top: 2px;
+  color: var(--muted);
+}
+.edu .item .courses{
+  margin-top: 2px;
+  font-style: italic;
+}
+@media (max-width: 680px){
+  .edu{ grid-template-columns: 1fr; }
+  .edu .dates{ margin-top: 8px; }
+}
