@@ -2,7 +2,7 @@ name: Daily YTM map update
 
 on:
   schedule:
-    - cron: "10 4 * * *"
+    - cron: "10 4 * * *"   # каждый день 04:10 UTC
   workflow_dispatch:
 
 permissions:
@@ -12,31 +12,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install deps
         run: pip install -U pandas numpy requests
 
-      - name: Ensure folders
+      - name: Ensure data folder
         run: mkdir -p data
 
       - name: Build JSON
-        run: |
-          python scripts/build_ytm_json.py
-          echo "---- list data/ ----"
-          ls -la data || true
-          echo "---- head json ----"
-          head -c 600 data/ytm_top20.json || true
-          echo ""
+        run: python build_ytm_json.py
 
-      - name: Git status
+      - name: Show result (debug)
         run: |
-          git status
-          git diff -- data/ytm_top20.json || true
+          ls -la data || true
+          head -c 800 data/ytm_top20.json || true
+          echo ""
 
       - name: Commit & push if changed
         run: |
