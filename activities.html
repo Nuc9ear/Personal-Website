@@ -86,11 +86,10 @@
       <h1>Projects</h1>
       <hr />
 
-      <!-- YTM Treemap (replaces "Soon...") -->
       <section class="map-card" aria-label="YTM treemap">
         <div class="map-head">
           <div class="map-pill"><b>YTM Heatmap (Top-20)</b></div>
-          <div class="map-pill">Click a tile → copy <b>SECID</b></div>
+          <div class="map-pill">Click a tile to copy <b>ISIN</b></div>
           <div class="map-pill" id="ytmUpdated">Updated: —</div>
         </div>
         <div id="ytmTreemap"></div>
@@ -183,7 +182,7 @@
 
       Plotly.newPlot(chartDiv, data, layout, {displayModeBar:false, responsive:true});
 
-      // click-to-copy SECID
+      // click-to-copy ISIN
       chartDiv.on('plotly_click', async (evt) => {
         const secid = evt?.points?.[0]?.label;
         if(!secid) return;
@@ -191,7 +190,7 @@
           await navigator.clipboard.writeText(String(secid));
           showToast(`Copied: ${secid}`);
         }catch(e){
-          showToast(`SECID: ${secid} (copy manually)`);
+          showToast(`ISIN: ${secid} (copy manually)`);
         }
       });
     }
