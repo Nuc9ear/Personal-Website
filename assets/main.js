@@ -25,6 +25,7 @@
   const el = document.querySelector("[data-last-updated]");
   if (el) el.textContent = new Date(document.lastModified).toLocaleDateString();
 })();
+
 // Typing effect for header taglines
 (function () {
   document.addEventListener("DOMContentLoaded", () => {
@@ -81,4 +82,159 @@
 
     setTimeout(tick, startDelay);
   });
+})();
+
+
+// --- YTM Heatmap (Plotly treemap) ---
+// Works only if #ytmTreemap exists on the page.
+(function () {
+  function $(id){ return document.getElementById(id); }
+
+  const chartDiv = $("ytmTreemap");
+  if (!chartDiv) return; // not on activities page
+
+  const updatedDiv = $("ytmUpdated");
+  const toast = $("toast");
+
+  function showToast(msg){
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.style.display = "block";
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(()=> toast.style.display="none", 1600);
+  }
+
+  async function loadYtmJson(){
+    // cache-bust to avoid GitHub Pages caching
+    const url = "./data/ytm_top20.json?v=" + Date.now();
+    const res = await fetch(url, { cache: "no-store" });
+    if(!res.ok) throw new Error("Cannot load " + url + " (HTTP " + res.status + ")");
+    return await res.json();
+  }
+
+  function clamp(x, a, b){ return Math.min(b, Math.max(a, x)); }
+
+  function renderTreemap(payload){
+    const rows = payload?.rows || [];
+    const cols = payload?.cols || [];
+    const updated_at = payload?.updated_at || "";
+
+    if (updatedDiv) updatedDiv.textContent = updated_at ? ("Updated: " + updated_at) : "Updated: —";
+
+    if(!rows.length){
+      chartDiv.innerHTML = "<div style='padding:14px;color:rgba(255,255,255,.85)'>No data in data/ytm_top20.json</div>";
+      return;
+    }
+
+    // Plotly must exist
+    if (typeof Plotly === "undefined") {
+      chartDiv.innerHTML = "<div style='padding:14px;color:rgba(255,255,255,.85)'>Plotly is not loaded. Add Plotly CDN in &lt;head&gt;.</div>";
+      return;
+    }
+
+    const labels = rows.map(r => String(r.SECID));
+    const values = rows.map(r => Number(r.SIZE || 1));
+    const customdata = rows.map(r => cols.map(c => r[c]));
+
+    // ---- Color normalization by percentiles (fix “all grey”) ----
+    const ytmArr = rows
+      .map(r => Number(r.YTM))
+      .filter(v => Number.isFinite(v))
+      .sort((a,b)=>a-b);
+
+    const quantile = (p) => {
+      if (!ytmArr.length) return 0;
+      const i = (ytmArr.length - 1) * p;
+      const lo = Math.floor(i), hi = Math.ceil(i);
+      const w = i - lo;
+      const vlo = (ytmArr[lo] ?? 0);
+      const vhi = (ytmArr[hi] ?? 0);
+      return vlo * (1 - w) + vhi * w;
+    };
+
+    const p05 = quantile(0.05);
+    const p95 = quantile(0.95);
+
+    // normalize to 0..1 (clipped)
+    const color = rows.map(r => {
+      const v = Number(r.YTM);
+      const vv = clamp(v, p05, p95);
+      return (p95 - p05) > 1e-9 ? (vv - p05) / (p95 - p05) : 0.5;
+    });
+
+    // Hovertemplate based on cols
+    const fmtLine = (c, i) => {
+      if (c === "YTM" || c === "COUPONPERCENT") return `${c}: %{customdata[${i}]:.2f}%`;
+      if (c === "YEARS") return `${c}: %{customdata[${i}]:.2f}`;
+      return `${c}: %{customdata[${i}]}`;
+    };
+
+    const hoverLines = ["<b>%{label}</b>"].concat(cols.map((c,i)=>fmtLine(c,i)));
+    const hovertemplate = hoverLines.join("<br>") + "<extra></extra>";
+
+    const ytmIdx = cols.indexOf("YTM");
+    const texttemplate = (ytmIdx >= 0)
+      ? `<b>%{label}</b><br>%{customdata[${ytmIdx}]:.2f}%`
+      : "<b>%{label}</b>";
+
+    const data = [{
+      type: "treemap",
+      labels,
+      parents: labels.map(()=>""), // one level
+      values,
+      customdata,
+      hovertemplate,
+      texttemplate,
+      textfont: { color: "white" },
+      marker: {
+        colors: color,
+        // vivid scale (less grey, more contrast)
+        colorscale: [
+          [0.00, "#7f0000"],
+          [0.35, "#ff4d4d"],
+          [0.50, "#ffd166"],
+          [0.70, "#4ade80"],
+          [1.00, "#00c853"]
+        ],
+        line: { color: "#000000", width: 3 }
+      },
+      root: { color: "#0b0f14" }
+    }];
+
+    const layout = {
+      paper_bgcolor: "#0b0f14",
+      plot_bgcolor: "#0b0f14",
+      margin: { t: 10, l: 10, r: 10, b: 10 },
+      uniformtext: { minsize: 11, mode: "hide" }
+    };
+
+    Plotly.newPlot(chartDiv, data, layout, { displayModeBar: false, responsive: true });
+
+    // click-to-copy SECID
+    chartDiv.on("plotly_click", async (evt) => {
+      const secid = evt?.points?.[0]?.label;
+      if(!secid) return;
+
+      try{
+        await navigator.clipboard.writeText(String(secid));
+        showToast(`Copied: ${secid}`);
+      }catch(e){
+        showToast(`SECID: ${secid} (copy manually)`);
+      }
+    });
+  }
+
+  // init
+  (async function init(){
+    try{
+      const payload = await loadYtmJson();
+      renderTreemap(payload);
+    }catch(err){
+      chartDiv.innerHTML =
+        "<div style='padding:14px;color:rgba(255,255,255,.85)'>" +
+        "<b>Treemap error:</b> " + (err?.message || String(err)) +
+        "<br><br>Check that <code>data/ytm_top20.json</code> exists in the repo root and is accessible via GitHub Pages." +
+        "</div>";
+    }
+  })();
 })();
