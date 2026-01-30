@@ -6,7 +6,58 @@
   <title>Activities · Egor Grishin</title>
   <meta name="description" content="Personal academic webpage (GitHub Pages-ready)." />
   <link rel="stylesheet" href="assets/styles.css" />
+
+  <!-- Plotly for treemap -->
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+
+  <style>
+    /* Local styles only for the map block */
+    .map-card{
+      margin-top: 14px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: #0b0f14;
+    }
+    .map-head{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      padding: 10px 12px;
+      background: rgba(17,24,39,.85);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .map-pill{
+      padding: 6px 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      font-size: 13px;
+      color: rgba(255,255,255,.85);
+      white-space: nowrap;
+    }
+    #ytmTreemap{
+      width: 100%;
+      height: 72vh;
+      min-height: 520px;
+    }
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      background: rgba(17,24,39,.96);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 10px 14px;
+      border-radius: 10px;
+      display: none;
+      z-index: 9999;
+      color: white;
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
   <main class="container">
 <header>
@@ -34,11 +85,16 @@
     <article>
       <h1>Projects</h1>
       <hr />
-      
-<p>
-Soon...
-</p>
 
+      <!-- ✅ YTM Treemap (replaces "Soon...") -->
+      <section class="map-card" aria-label="YTM treemap">
+        <div class="map-head">
+          <div class="map-pill"><b>YTM Heatmap (Top-20)</b></div>
+          <div class="map-pill">Click a tile → copy <b>SECID</b></div>
+          <div class="map-pill" id="ytmUpdated">Updated: —</div>
+        </div>
+        <div id="ytmTreemap"></div>
+      </section>
     </article>
 
     <footer class="footer">
@@ -47,6 +103,107 @@ Soon...
     </footer>
   </main>
 
+  <div class="toast" id="toast"></div>
+
   <script src="assets/main.js"></script>
+
+  <!-- ✅ Treemap loader -->
+  <script>
+    const chartDiv = document.getElementById('ytmTreemap');
+    const updatedDiv = document.getElementById('ytmUpdated');
+    const toast = document.getElementById('toast');
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(()=> toast.style.display='none', 1600);
+    }
+
+    async function loadYtmJson(){
+      // no-store to avoid caching stale data
+      const res = await fetch('./data/ytm_top20.json', { cache: 'no-store' });
+      if(!res.ok) throw new Error('Cannot load data/ytm_top20.json (HTTP ' + res.status + ')');
+      return await res.json();
+    }
+
+    function renderTreemap(payload){
+      const rows = payload.rows || [];
+      const cols = payload.cols || [];
+      const updated_at = payload.updated_at || '';
+      updatedDiv.textContent = updated_at ? ('Updated: ' + updated_at) : 'Updated: —';
+
+      if(!rows.length){
+        chartDiv.innerHTML = "<div style='padding:14px;color:rgba(255,255,255,.85)'>No data in ytm_top20.json</div>";
+        return;
+      }
+
+      const labels = rows.map(r => String(r.SECID));
+      const values = rows.map(r => Number(r.SIZE));
+      const color = rows.map(r => Number(r.COLORVAL));
+      const customdata = rows.map(r => cols.map(c => r[c]));
+
+      // hovertemplate from cols
+      const fmtLine = (c, i) => {
+        if (c === "YTM" || c === "COUPONPERCENT") return `${c}: %{customdata[${i}]:.2f}%`;
+        if (c === "YEARS") return `${c}: %{customdata[${i}]:.2f}`;
+        return `${c}: %{customdata[${i}]}`;
+      };
+      const hoverLines = ['<b>%{label}</b>'].concat(cols.map((c,i)=>fmtLine(c,i)));
+      const hovertemplate = hoverLines.join('<br>') + '<extra></extra>';
+
+      const ytmIdx = cols.indexOf("YTM");
+      const texttemplate = (ytmIdx >= 0)
+        ? `<b>%{label}</b><br>%{customdata[${ytmIdx}]:.2f}%`
+        : "<b>%{label}</b>";
+
+      const data = [{
+        type: "treemap",
+        labels,
+        parents: labels.map(()=>""), // one level
+        values,
+        customdata,
+        hovertemplate,
+        texttemplate,
+        textfont: { color: "white" },
+        marker: {
+          colors: color,
+          colorscale: "RdYlGn",
+          line: { color: "#000000", width: 3 }
+        },
+        root: { color: "#0b0f14" }
+      }];
+
+      const layout = {
+        paper_bgcolor: "#0b0f14",
+        plot_bgcolor: "#0b0f14",
+        margin: { t: 10, l: 10, r: 10, b: 10 },
+        uniformtext: { minsize: 11, mode: "hide" }
+      };
+
+      Plotly.newPlot(chartDiv, data, layout, {displayModeBar:false, responsive:true});
+
+      // click-to-copy SECID
+      chartDiv.on('plotly_click', async (evt) => {
+        const secid = evt?.points?.[0]?.label;
+        if(!secid) return;
+        try{
+          await navigator.clipboard.writeText(String(secid));
+          showToast(`Copied: ${secid}`);
+        }catch(e){
+          showToast(`SECID: ${secid} (copy manually)`);
+        }
+      });
+    }
+
+    (async function init(){
+      try{
+        const payload = await loadYtmJson();
+        renderTreemap(payload);
+      }catch(err){
+        chartDiv.innerHTML = "<div style='padding:14px;color:rgba(255,255,255,.85)'>Treemap error: " + err.message + "</div>";
+      }
+    })();
+  </script>
 </body>
 </html>
