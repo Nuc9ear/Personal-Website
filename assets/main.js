@@ -88,7 +88,11 @@
 
 
 // --- YTM Heatmap (Plotly treemap) ---
-// Works only if #ytmTreemap exists on the page.
+// Paste this block ONLY (map part) into assets/main.js
+// Requires in HTML:
+// 1) <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+// 2) elements: #ytmTreemap, #ytmUpdated (optional), #toast (optional)
+
 (function () {
   function $(id){ return document.getElementById(id); }
 
@@ -126,7 +130,6 @@
       return;
     }
 
-    // Plotly must exist
     if (typeof Plotly === "undefined") {
       chartDiv.innerHTML = "<div style='padding:14px;color:rgba(255,255,255,.85)'>Plotly is not loaded. Add Plotly CDN in &lt;head&gt;.</div>";
       return;
@@ -136,11 +139,10 @@
     const values = rows.map(r => Number(r.SIZE || 1));
     const customdata = rows.map(r => cols.map(c => r[c]));
 
-    // ---- Robust color normalization (ignore outliers like 62% dominating) ----
+    // ---- Robust color normalization (and REVERSED: high YTM -> red, low -> green) ----
     const ytmRaw = rows.map(r => {
       const v = r.YTM;
       if (v === null || v === undefined) return NaN;
-      // handle "17,45" -> "17.45" just in case
       const s = String(v).replace(",", ".");
       const num = Number(s);
       return Number.isFinite(num) ? num : NaN;
@@ -158,22 +160,23 @@
       return vlo * (1 - w) + vhi * w;
     };
 
-    // KEY: use smaller upper percentile so huge values don't flatten the palette
+    const clamp = (x,a,b)=> Math.min(b, Math.max(a, x));
+
+    // Clip outliers so 62% doesn't flatten the palette
     const P_LOW  = 0.05;
-    const P_HIGH = 0.85;   // try 0.80–0.90; 0.85 is a good default
+    const P_HIGH = 0.85;    // tweak 0.80–0.90 if needed
     const pLo = quantile(P_LOW);
     const pHi = quantile(P_HIGH);
-
-    const clamp = (x,a,b)=> Math.min(b, Math.max(a, x));
 
     // gamma < 1 increases contrast among mid values
     const GAMMA = 0.65;
 
+    // Normalize to 0..1 then INVERT (so high YTM becomes closer to 0 => red)
     const color = ytmRaw.map(v => {
       if (!Number.isFinite(v)) return 0.5;
       const vv = clamp(v, pLo, pHi);
       const t = (pHi - pLo) > 1e-9 ? (vv - pLo) / (pHi - pLo) : 0.5;
-      return Math.pow(t, GAMMA);
+      return 1 - Math.pow(t, GAMMA); // <-- reversed
     });
 
     // Hovertemplate based on cols
@@ -204,7 +207,7 @@
         colors: color,
         cmin: 0,
         cmax: 1,
-        // vivid scale (high -> green)
+        // low (0) -> red, high (1) -> green (but we already inverted color above)
         colorscale: [
           [0.00, "#5a0000"],
           [0.30, "#ff2d2d"],
@@ -212,7 +215,6 @@
           [0.70, "#22c55e"],
           [1.00, "#00ff6a"]
         ],
-        reversescale: false,
         line: { color: "#000000", width: 3 }
       },
       root: { color: "#0b0f14" }
@@ -250,7 +252,6 @@
       chartDiv.innerHTML =
         "<div style='padding:14px;color:rgba(255,255,255,.85)'>" +
         "<b>Treemap error:</b> " + (err?.message || String(err)) +
-        "<br><br>Check that <code>data/ytm_top20.json</code> exists in the repo root and is accessible via GitHub Pages." +
         "</div>";
     }
   })();
