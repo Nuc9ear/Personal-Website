@@ -1,3 +1,5 @@
+// assets/main.js
+
 // Tiny helper: highlight active nav link + copy-to-clipboard button
 (function () {
   const path = (location.pathname.split("/").pop() || "index.html").toLowerCase();
@@ -112,8 +114,6 @@
     return await res.json();
   }
 
-  function clamp(x, a, b){ return Math.min(b, Math.max(a, x)); }
-
   function renderTreemap(payload){
     const rows = payload?.rows || [];
     const cols = payload?.cols || [];
@@ -136,11 +136,17 @@
     const values = rows.map(r => Number(r.SIZE || 1));
     const customdata = rows.map(r => cols.map(c => r[c]));
 
-    // ---- Color normalization by percentiles (fix “all grey”) ----
-    const ytmArr = rows
-      .map(r => Number(r.YTM))
-      .filter(v => Number.isFinite(v))
-      .sort((a,b)=>a-b);
+    // ---- Robust color normalization (ignore outliers like 62% dominating) ----
+    const ytmRaw = rows.map(r => {
+      const v = r.YTM;
+      if (v === null || v === undefined) return NaN;
+      // handle "17,45" -> "17.45" just in case
+      const s = String(v).replace(",", ".");
+      const num = Number(s);
+      return Number.isFinite(num) ? num : NaN;
+    });
+
+    const ytmArr = ytmRaw.filter(v => Number.isFinite(v)).sort((a,b)=>a-b);
 
     const quantile = (p) => {
       if (!ytmArr.length) return 0;
@@ -152,14 +158,22 @@
       return vlo * (1 - w) + vhi * w;
     };
 
-    const p05 = quantile(0.05);
-    const p95 = quantile(0.95);
+    // KEY: use smaller upper percentile so huge values don't flatten the palette
+    const P_LOW  = 0.05;
+    const P_HIGH = 0.85;   // try 0.80–0.90; 0.85 is a good default
+    const pLo = quantile(P_LOW);
+    const pHi = quantile(P_HIGH);
 
-    // normalize to 0..1 (clipped)
-    const color = rows.map(r => {
-      const v = Number(r.YTM);
-      const vv = clamp(v, p05, p95);
-      return (p95 - p05) > 1e-9 ? (vv - p05) / (p95 - p05) : 0.5;
+    const clamp = (x,a,b)=> Math.min(b, Math.max(a, x));
+
+    // gamma < 1 increases contrast among mid values
+    const GAMMA = 0.65;
+
+    const color = ytmRaw.map(v => {
+      if (!Number.isFinite(v)) return 0.5;
+      const vv = clamp(v, pLo, pHi);
+      const t = (pHi - pLo) > 1e-9 ? (vv - pLo) / (pHi - pLo) : 0.5;
+      return Math.pow(t, GAMMA);
     });
 
     // Hovertemplate based on cols
@@ -188,14 +202,17 @@
       textfont: { color: "white" },
       marker: {
         colors: color,
-        // vivid scale (less grey, more contrast)
+        cmin: 0,
+        cmax: 1,
+        // vivid scale (high -> green)
         colorscale: [
-          [0.00, "#7f0000"],
-          [0.35, "#ff4d4d"],
+          [0.00, "#5a0000"],
+          [0.30, "#ff2d2d"],
           [0.50, "#ffd166"],
-          [0.70, "#4ade80"],
-          [1.00, "#00c853"]
+          [0.70, "#22c55e"],
+          [1.00, "#00ff6a"]
         ],
+        reversescale: false,
         line: { color: "#000000", width: 3 }
       },
       root: { color: "#0b0f14" }
