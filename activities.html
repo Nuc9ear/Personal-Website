@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Projects · Egor Grishin</title>
-  <meta name="description" content="Projects: MOEX Russian Bonds Heatmap (Top-20 YTM, Listing Level 1) + explanation and code snippets." />
+  <title>Activities · Egor Grishin</title>
+  <meta name="description" content="Personal academic webpage (GitHub Pages-ready)." />
   <link rel="stylesheet" href="assets/styles.css" />
 
   <!-- Plotly for treemap -->
   <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 
   <style>
-    /* Local styles only for this page block */
+    /* Local styles only for the map block */
     .map-card{
       margin-top: 14px;
       border-radius: 14px;
@@ -41,91 +41,6 @@
       height: 72vh;
       min-height: 520px;
     }
-
-    /* Project write-up styling */
-    .proj-card{
-      margin-top: 14px;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(11,15,20,.90);
-    }
-    .proj-inner{
-      padding: 14px 14px 6px 14px;
-      color: rgba(255,255,255,.90);
-      line-height: 1.55;
-    }
-    .proj-grid{
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-      margin-top: 10px;
-    }
-    .proj-box{
-      grid-column: span 12;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(17,24,39,.35);
-      border-radius: 12px;
-      padding: 12px;
-    }
-    @media (min-width: 900px){
-      .proj-box.half{ grid-column: span 6; }
-      .proj-box.third{ grid-column: span 4; }
-    }
-    .proj-k{
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      color: rgba(255,255,255,.65);
-      margin-bottom: 6px;
-    }
-    .proj-title{
-      font-size: 18px;
-      font-weight: 700;
-      margin: 0 0 6px 0;
-    }
-    .proj-list{
-      margin: 8px 0 0 18px;
-      color: rgba(255,255,255,.88);
-    }
-    .proj-list li{ margin: 5px 0; }
-
-    details.proj-details{
-      margin-top: 10px;
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 12px;
-      background: rgba(17,24,39,.28);
-      overflow: hidden;
-    }
-    details.proj-details summary{
-      cursor: pointer;
-      padding: 10px 12px;
-      color: rgba(255,255,255,.92);
-      font-weight: 650;
-      list-style: none;
-    }
-    details.proj-details summary::-webkit-details-marker{ display:none; }
-    .codewrap{
-      padding: 0 12px 12px 12px;
-    }
-    pre.code{
-      margin: 0;
-      padding: 12px;
-      overflow: auto;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.35);
-      color: rgba(255,255,255,.92);
-      font-size: 12.5px;
-      line-height: 1.45;
-      white-space: pre;
-    }
-    .note{
-      color: rgba(255,255,255,.70);
-      font-size: 13px;
-      margin-top: 8px;
-    }
-
     .toast{
       position: fixed;
       left: 50%;
@@ -145,186 +60,36 @@
 
 <body>
   <main class="container">
-    <header>
-      <div class="header-row">
-        <img class="header-photo" src="assets/EGOR%20GR.jpg?v=1" alt="Egor Grishin" />
-        <div class="header-content">
-          <div class="site-title">Egor Grishin</div>
-          <div class="taglines">
-            <div>Finance meets Data meets Math</div>
-            <div>Educated International</div>
-            <div>Now in Shanghai</div>
-          </div>
-        </div>
+<header>
+  <div class="header-row">
+    <img class="header-photo" src="assets/EGOR%20GR.jpg?v=1" alt="Egor Grishin" />
+    <div class="header-content">
+      <div class="site-title">Egor Grishin</div>
+      <div class="taglines">
+        <div>Finance meets Data meets Math</div>
+        <div>Educated International</div>
+        <div>Now in Shanghai</div>
       </div>
+    </div>
+  </div>
 
-      <nav aria-label="Primary">
-        <ul class="nav">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="cv.html">CV</a></li>
-          <li><a href="activities.html">Projects</a></li>
-        </ul>
-      </nav>
-    </header>
+  <nav aria-label="Primary">
+    <ul class="nav">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="cv.html">CV</a></li>
+      <li><a href="activities.html">Projects</a></li>
+    </ul>
+  </nav>
+</header>
 
     <article>
       <h1>Projects</h1>
       <hr />
 
-      <!-- Project explanation -->
-      <section class="proj-card" aria-label="Project explanation">
-        <div class="proj-inner">
-          <div class="proj-title">MOEX Russian Bonds Heatmap (Top-20 by YTM, Listing Level 1)</div>
-          <div>
-            This mini-project turns the MOEX ISS bond universe into a simple, shareable dashboard:
-            a treemap where each tile is a bond, colored by yield-to-maturity (YTM), sized by a monotonic transform of YTM,
-            and clickable to copy the instrument code (SECID/ISIN) for quick research.
-          </div>
-
-          <div class="proj-grid">
-            <div class="proj-box third">
-              <div class="proj-k">Data source</div>
-              <div>MOEX ISS API (bonds market)</div>
-              <div class="note">Python fetch → JSON artifact for GitHub Pages.</div>
-            </div>
-            <div class="proj-box third">
-              <div class="proj-k">Screening</div>
-              <div>First listing level, RUB, positive YTM, valid maturity date.</div>
-              <div class="note">Keeps the universe “cleaner” for a quick scan.</div>
-            </div>
-            <div class="proj-box third">
-              <div class="proj-k">UX</div>
-              <div>Hover for details • click tile to copy SECID.</div>
-              <div class="note">No backend: everything runs client-side.</div>
-            </div>
-
-            <div class="proj-box half">
-              <div class="proj-k">What the chart encodes</div>
-              <ul class="proj-list">
-                <li><b>Tile color</b>: YTM (clipped to reduce outlier impact on the palette).</li>
-                <li><b>Tile size</b>: √(YTM) as a stable visual scaling (still monotonic in YTM).</li>
-                <li><b>Hover</b>: key fields like maturity, coupon, listing level, issue size, update time.</li>
-              </ul>
-            </div>
-
-            <div class="proj-box half">
-              <div class="proj-k">How the pipeline works</div>
-              <ol class="proj-list">
-                <li>Python script fetches traded bonds from MOEX ISS.</li>
-                <li>Clean + filter to the target universe (Listing Level 1).</li>
-                <li>Take Top-20 by YTM, compute <code>SIZE</code> and <code>COLORVAL</code>, export as JSON.</li>
-                <li>This page loads <code>data/ytm_top20.json</code> and renders the treemap via Plotly.</li>
-              </ol>
-            </div>
-          </div>
-
-          <details class="proj-details">
-            <summary>Python: fetch + filter + export (core idea)</summary>
-            <div class="codewrap">
-              <pre class="code"># MOEX ISS → bonds universe (simplified core)
-import requests
-import pandas as pd
-import numpy as np
-
-BASE_URL = "https://iss.moex.com/iss"
-
-def get_traded_bonds(limit=3000):
-    url = f"{BASE_URL}/engines/stock/markets/bonds/securities.json"
-    params = {"is_trading": 1, "iss.meta": "off", "limit": limit}
-    js = requests.get(url, params=params, timeout=30).json()
-    sec = pd.DataFrame(js["securities"]["data"], columns=js["securities"]["columns"])
-    return sec
-
-bonds = get_traded_bonds()
-
-# Parse + basic cleaning (typical)
-bonds["MATDATE"] = pd.to_datetime(bonds["MATDATE"], errors="coerce")
-bonds["YTM"] = pd.to_numeric(bonds["YIELDATPREVWAPRICE"], errors="coerce")
-bonds = bonds.dropna(subset=["MATDATE", "YTM", "LISTLEVEL"])
-bonds = bonds[bonds["YTM"] &gt; 0]
-
-# Focus: First listing level + RUB (optional)
-bonds["CURRENCYID"] = bonds["CURRENCYID"].replace({"SUR": "RUB"})
-bonds = bonds[(bonds["LISTLEVEL"] == 1) &amp; (bonds["CURRENCYID"] == "RUB")]
-
-# Top-20 by YTM
-TOP_N = 20
-df = (bonds.sort_values("YTM", ascending=False).head(TOP_N).copy())
-
-# Tile size + robust color clipping for palette stability
-df["SIZE"] = np.sqrt(df["YTM"].clip(lower=0))
-p5, p95 = np.percentile(df["YTM"], 5), np.percentile(df["YTM"], 95)
-df["COLORVAL"] = df["YTM"].clip(p5, p95)
-
-# Export JSON for GitHub Pages
-payload = {
-  "updated_at": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S"),
-  "cols": ["SECID","SHORTNAME","MATDATE","YTM","COUPONPERCENT","LISTLEVEL","CURRENCYID"],
-  "rows": df[["SECID","SHORTNAME","MATDATE","YTM","COUPONPERCENT","LISTLEVEL","CURRENCYID","SIZE","COLORVAL"]]
-          .assign(MATDATE=lambda x: x["MATDATE"].dt.strftime("%Y-%m-%d"))
-          .to_dict(orient="records")
-}
-
-import json, os
-os.makedirs("data", exist_ok=True)
-with open("data/ytm_top20.json", "w", encoding="utf-8") as f:
-    json.dump(payload, f, ensure_ascii=False, indent=2)</pre>
-              <div class="note">
-                Note: in your full notebook, you also compute maturity in years and can extend the payload with OFZ spread logic,
-                issue size formatting, and richer hover fields.
-              </div>
-            </div>
-          </details>
-
-          <details class="proj-details">
-            <summary>Front-end: JSON → Plotly treemap (what this page runs)</summary>
-            <div class="codewrap">
-              <pre class="code">// Core idea: fetch JSON and render treemap
-async function loadYtmJson(){
-  const res = await fetch('./data/ytm_top20.json', { cache: 'no-store' });
-  if(!res.ok) throw new Error('Cannot load data/ytm_top20.json (HTTP ' + res.status + ')');
-  return await res.json();
-}
-
-function renderTreemap(payload){
-  const rows = payload.rows || [];
-  const cols = payload.cols || [];
-
-  const labels = rows.map(r =&gt; String(r.SECID));
-  const values = rows.map(r =&gt; Number(r.SIZE));
-  const color  = rows.map(r =&gt; Number(r.COLORVAL));
-  const customdata = rows.map(r =&gt; cols.map(c =&gt; r[c]));
-
-  Plotly.newPlot('ytmTreemap', [{
-    type: "treemap",
-    labels,
-    parents: labels.map(()=&gt;""),
-    values,
-    customdata,
-    marker: { colors: color, colorscale: "RdYlGn" }
-  }], { margin: {t:10,l:10,r:10,b:10} });
-
-  // click-to-copy
-  document.getElementById('ytmTreemap').on('plotly_click', async (evt) =&gt; {
-    const secid = evt?.points?.[0]?.label;
-    if(secid) await navigator.clipboard.writeText(String(secid));
-  });
-}</pre>
-            </div>
-          </details>
-
-          <div class="note">
-            If the treemap shows “No data”, it means <code>data/ytm_top20.json</code> is missing or empty.
-            The website part is static; the only “dynamic” step is re-generating that JSON periodically.
-          </div>
-        </div>
-      </section>
-
-      <!-- The treemap itself -->
       <section class="map-card" aria-label="YTM treemap">
         <div class="map-head">
           <div class="map-pill"><b>Russian Bonds Heatmap (Top-20: YTM, First Level of Listing)</b></div>
-          <div class="map-pill">Click a tile to copy <b>SECID / ISIN</b></div>
+          <div class="map-pill">Click a tile to copy <b>ISIN</b></div>
           <div class="map-pill" id="ytmUpdated">Updated: —</div>
         </div>
         <div id="ytmTreemap"></div>
@@ -417,7 +182,7 @@ function renderTreemap(payload){
 
       Plotly.newPlot(chartDiv, data, layout, {displayModeBar:false, responsive:true});
 
-      // click-to-copy SECID/ISIN
+      // click-to-copy ISIN
       chartDiv.on('plotly_click', async (evt) => {
         const secid = evt?.points?.[0]?.label;
         if(!secid) return;
@@ -425,7 +190,7 @@ function renderTreemap(payload){
           await navigator.clipboard.writeText(String(secid));
           showToast(`Copied: ${secid}`);
         }catch(e){
-          showToast(`SECID: ${secid} (copy manually)`);
+          showToast(`ISIN: ${secid} (copy manually)`);
         }
       });
     }
