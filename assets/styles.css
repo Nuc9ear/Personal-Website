@@ -365,3 +365,15 @@ li{ margin: 6px 0; }
 @media (max-width:680px){
   .skills{ grid-template-columns:1fr !important; }
 }
+<style>
+  /* Links without underline by default */
+  .material-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Underline only while clicking */
+  .material-link:active {
+    text-decoration: underline;
+  }
+</style>
