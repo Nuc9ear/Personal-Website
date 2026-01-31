@@ -39,22 +39,38 @@
       <section aria-label="Selected Projects">
         <h2 style="margin-top: 14px;">Public Projects</h2>
 
-        <p style="margin-top: 10px; line-height: 1.55;">
+        <p style="margin-top: 12px; line-height: 1.6;">
           [01]
-          <b>“Russian Bonds Market Microstructure and Yield Analysis (MOEX)”</b><br>
-          Description: This project develops a full data pipeline for the Russian bond market
-          using MOEX ISS API. It covers yield-to-maturity (YTM) estimation, maturity structure,
-          listing-level segmentation, OFZ-based risk-free curve construction, credit spread
-          analysis, and interactive visualizations including treemaps and term-structure plots.<br>
-          Year: 2025-now<br>
-          Code:
-          <a href="https://github.com/USERNAME/moex-bonds-analysis" target="_blank" rel="noopener">
-            GitHub repository
-          </a>
-        </p>
+          <b>“Russian Bonds Market Microstructure and Yield-to-Maturity Analysis (MOEX)”</b><br>
+          Author: Egor Grishin<br>
+          Year: 2025<br><br>
 
-        <p class="small" style="color: rgba(255,255,255,.75); margin-top: 10px;">
-          Note: Replace <b>USERNAME</b> with your GitHub username (or paste the exact repo link).
+          <b>Project description.</b>
+          This project is a quantitative research and data-engineering study of the Russian
+          corporate and government bond market based on the Moscow Exchange (MOEX) ISS API.
+          The goal of the project is to construct a transparent and reproducible framework
+          for analyzing yield-to-maturity (YTM), maturity structure, risk segmentation,
+          and relative valuation of fixed-income instruments traded on MOEX.<br><br>
+
+          The project implements a full data pipeline: automated data collection from MOEX,
+          data cleaning and normalization, construction of bond-level features (YTM, years
+          to maturity, coupon characteristics), and classification by official listing
+          levels (1–3). A special focus is placed on government OFZ bonds, which are used
+          to estimate a risk-free yield curve and compute credit spreads for corporate
+          bonds across maturities.<br><br>
+
+          The analytical layer includes descriptive statistics, ranking of bonds by YTM,
+          spread analysis relative to the OFZ curve, maturity-based aggregation, and
+          multiple visualizations. These include scatter plots of YTM versus time to
+          maturity, risk stratification by listing level, and an interactive treemap
+          highlighting the top bonds by yield. The project is designed both for academic
+          exploration and as a practical research tool for fixed-income analysis.<br><br>
+
+          <b>Materials:</b>
+          <a href="https://drive.google.com/file/d/1GJA7yqffW1fSDVhcjJlRnZ1i8geaP3jl/view?usp=sharing"
+             target="_blank" rel="noopener">
+            Project notebook (Google Drive)
+          </a>
         </p>
       </section>
     </article>
