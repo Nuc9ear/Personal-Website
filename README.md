@@ -4,11 +4,8 @@ This is a minimal multi-page site implemented with plain HTML/CSS/JS.
 
 ## Structure
 - `index.html` — Home
-- `research.html`
 - `cv.html` (+ `assets/cv.pdf`)
-- `teaching.html`
 - `activities.html`
-- `this-and-that.html`
 - `assets/styles.css`
 - `assets/main.js`
 
