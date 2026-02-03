@@ -384,7 +384,7 @@ li{ margin: 6px 0; }
   display: flex;
   align-items: center;      /* vertical centering */
   justify-content: center;  /* keep it in the middle of the right column */
-  min-width: 260px;         /* creates the "green zone" space */
+  min-width: 100px;         /* creates the "green zone" space */
 }
 
 /* Optional: limit text width so there is consistent empty space on wide screens */
