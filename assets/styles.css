@@ -370,36 +370,29 @@ li{ margin: 6px 0; }
    Button centered in the "empty" right area
    ========================= */
 /* ===== Courses button forced position (override) ===== */
-.edu.edu-courses .item.course-row-center{
-  position: relative !important;
-  padding-right: 220px !important; /* space so text doesn't overlap button */
+/* Courses: place button to the right, AFTER the full header (including HKUST line) */
+.edu-courses .course-top{
+  display: flex;
+  align-items: flex-start;       /* button aligns to top of the header block */
+  justify-content: space-between;
+  gap: 14px;
 }
 
-.edu.edu-courses .item.course-row-center .course-btn-float{
-  position: absolute !important;
-  left: 64% !important;            /* move into the "green zone" */
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
+.edu-courses .course-top .school{
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
-/* compact button */
-.button.button-mini{
-  padding: 6px 10px !important;
-  font-size: 13px !important;
-  line-height: 1.1 !important;
-  border-radius: 10px !important;
-  white-space: nowrap !important;
+/* keep button on one line and prevent shrinking */
+.edu-courses .course-top .button{
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
-/* Mobile fallback */
+/* Mobile: button goes under the header */
 @media (max-width: 560px){
-  .edu.edu-courses .item.course-row-center{
-    padding-right: 0 !important;
-  }
-  .edu.edu-courses .item.course-row-center .course-btn-float{
-    position: static !important;
-    transform: none !important;
-    margin-top: 10px !important;
-    display: inline-flex !important;
+  .edu-courses .course-top{
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
