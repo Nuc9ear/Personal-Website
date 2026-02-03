@@ -365,3 +365,53 @@ li{ margin: 6px 0; }
 @media (max-width:680px){
   .skills{ grid-template-columns:1fr !important; }
 }
+/* =========================
+   Courses (CV page)
+   Button centered in the "empty" right area
+   ========================= */
+
+.edu-courses .course-row {
+  position: relative;
+}
+
+/* Keep the text from going under the floating button */
+.edu-courses .course-row-center {
+  padding-right: 170px; /* adjust if your button is wider */
+}
+
+/* Floating button in the middle of the empty space (green zone) */
+.edu-courses .course-btn-float {
+  position: absolute;
+  left: 64%;            /* tweak 58%–70% to match your exact "green zone" */
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Compact button variant (uses your existing .button base look) */
+.button.button-mini {
+  padding: 6px 10px;
+  font-size: 13px;
+  line-height: 1.1;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+/* Mobile: button goes under the text (no floating) */
+@media (max-width: 560px) {
+  .edu-courses .course-row-center {
+    padding-right: 0;
+  }
+
+  .edu-courses .course-btn-float {
+    position: static;
+    transform: none;
+    margin-top: 10px;
+    display: inline-flex;
+  }
+
+  .button.button-mini {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
