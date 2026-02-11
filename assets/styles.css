@@ -310,7 +310,7 @@ li{ margin: 6px 0; }
 @media (max-width:680px){
   .hon{ grid-template-columns: 1fr !important; }
 }
-/* ===== ACHIEVEMENTS GRID (same style) ===== */
+/* ===== ACHIEVEMENTS GRID (same style as Education) ===== */
 .ach{
   display:grid !important;
   grid-template-columns: 170px 1fr !important;
@@ -324,8 +324,11 @@ li{ margin: 6px 0; }
   line-height: 1.35;
 }
 .ach .dates .when{ font-weight:700; color:var(--fg); }
+.ach .dates .where{ font-style: italic; }   /* ✅ add this like Education */
 
 .ach .item .school{ font-weight:700; }
+.ach .item .degree{ margin-top:2px; }       /* ✅ add this like Education */
+.ach .item .courses{ margin-top:2px; font-style: italic; } /* optional */
 
 .ach .bullets{
   margin: 6px 0 0 18px;
@@ -337,6 +340,7 @@ li{ margin: 6px 0; }
 @media (max-width:680px){
   .ach{ grid-template-columns: 1fr !important; }
 }
+
 /* Typing effect cursor */
 .typing-cursor{
   display:inline-block;
