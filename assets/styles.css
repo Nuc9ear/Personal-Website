@@ -230,7 +230,7 @@ li{ margin: 6px 0; }
   line-height: 1.35;
 }
 .exp .dates .when{ font-weight:700; color:var(--fg); }
-.exp .dates .where{ font-style:italic; }
+.exp .dates .where{ font-style:normal; }
 
 .exp .item .school{ font-weight:700; }
 .exp .item .degree{ margin-top:2px; }
@@ -324,11 +324,11 @@ li{ margin: 6px 0; }
   line-height: 1.35;
 }
 .ach .dates .when{ font-weight:700; color:var(--fg); }
-.ach .dates .where{ font-style: italic; }   /* ✅ add this like Education */
+.ach .dates .where{ font-style: normal; }   /* ✅ add this like Education */
 
 .ach .item .school{ font-weight:700; }
 .ach .item .degree{ margin-top:2px; }       /* ✅ add this like Education */
-.ach .item .courses{ margin-top:2px; font-style: italic; } /* optional */
+.ach .item .courses{ margin-top:2px; font-style: normal; } /* optional */
 
 .ach .bullets{
   margin: 6px 0 0 18px;
