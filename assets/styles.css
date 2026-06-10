@@ -5,11 +5,13 @@
   --link:#0645ad;
   --bg:#fff;
   --hr:#ddd;
+  --soft:#f7f7f7;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
   --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
 }
-*{box-sizing:border-box}
-html,body{height:100%}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
 body{
   margin:0;
   font-family: var(--sans);
@@ -17,16 +19,19 @@ body{
   color: var(--fg);
   line-height: 1.55;
 }
+
 .container{
   max-width: var(--maxw);
   margin: 48px auto 72px;
   padding: 0 22px;
 }
+
 .site-title{
   font-size: 2.2rem;
   font-weight: 700;
   margin: 0 0 6px;
 }
+
 .taglines{
   margin: 0 0 18px;
   font-family: var(--mono);
@@ -34,6 +39,7 @@ body{
   line-height: 1.45;
 }
 .taglines div{ margin: 2px 0; }
+
 .nav{
   display:flex;
   flex-wrap: wrap;
@@ -65,29 +71,51 @@ h3{
   font-size: 1.05rem;
   margin: 18px 0 8px;
 }
+
 hr{
   border: 0;
   border-top: 1px solid var(--hr);
   margin: 18px 0 18px;
 }
+
 a{ color: var(--link); }
 a:hover{ text-decoration: underline; }
 p{ margin: 10px 0; }
 ul{ margin: 8px 0 14px 20px; }
 li{ margin: 6px 0; }
 .small{ color: var(--muted); font-size: .95rem; }
-.kv{
-  white-space: pre-line;
-  margin-left: 0;
-}
+.code{ font-family: var(--mono); font-size: .95rem; }
+
 .card{
   border: 1px solid var(--hr);
   border-radius: 10px;
   padding: 14px 16px;
   margin: 12px 0 14px;
 }
+
+.button{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family: var(--mono);
+  border: 1px solid var(--hr);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: transparent;
+  cursor:pointer;
+  color: var(--fg);
+  text-decoration: none;
+}
+.button:hover{
+  background: var(--soft);
+  text-decoration: none;
+}
+
 .pills{
-  display:flex; flex-wrap:wrap; gap:8px; margin-top:8px
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:8px;
 }
 .pill{
   font-family: var(--mono);
@@ -97,6 +125,14 @@ li{ margin: 6px 0; }
   padding: 4px 10px;
   color: var(--muted);
 }
+
+.embed{
+  width: 100%;
+  height: 860px;
+  border: 1px solid var(--hr);
+  border-radius: 10px;
+}
+
 .footer{
   margin-top: 46px;
   padding-top: 16px;
@@ -109,43 +145,16 @@ li{ margin: 6px 0; }
   flex-wrap: wrap;
   gap: 10px;
 }
-.button{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  font-family: var(--mono);
-  border: 1px solid var(--hr);
-  border-radius: 10px;
-  padding: 8px 10px;
-  background: transparent;
-  cursor:pointer;
-  color: var(--fg);
-}
-.button:hover{ background: #f7f7f7; }
-.code{
-  font-family: var(--mono);
-  font-size: .95rem;
-}
-.embed{
-  width: 100%;
-  height: 860px;
-  border: 1px solid var(--hr);
-  border-radius: 10px;
-}
-@media (max-width: 600px){
-  .container{ margin-top: 30px; }
-  .site-title{ font-size: 1.9rem; }
-  .embed{ height: 720px; }
-}
+
 .contact a,
 .contact a:link,
 .contact a:visited,
 .contact a:hover,
 .contact a:focus,
-.contact a:active {
+.contact a:active{
   text-decoration: none !important;
 }
-/* Header photo + layout */
+
 .header-row{
   display:flex;
   align-items:flex-start;
@@ -154,97 +163,174 @@ li{ margin: 6px 0; }
 .header-photo{
   display:block;
   flex:0 0 auto;
-  width:160px;      /* было 120 */
-  height:160px;     /* было 120 */
+  width:160px;
+  height:160px;
   object-fit:cover;
   object-position:50% 20%;
-  border-radius:14px; /* чуть больше, чтобы красиво */
+  border-radius:14px;
   border:1px solid rgba(0,0,0,.12);
   background:#f2f2f2;
 }
+.header-content{
+  flex: 1 1 auto;
+  min-width: 0;
+}
 
-@media (max-width:700px){
-  .header-row{ gap:14px; }
-  .header-photo{ width:96px; height:96px; } /* было 72 */
+/* ===== CV unified layout ===== */
+.cv-page{
+  --datew: 190px;
 }
-/* ===== EDUCATION GRID (force) ===== */
-.edu{
-  display:grid !important;
-  grid-template-columns: 170px 1fr !important;
-  gap: 10px 18px !important;
-  margin: 10px 0 14px !important;
+
+.cv-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
 }
-.edu .dates{
-  font-family: var(--mono);
-  color: var(--muted);
+
+.cv-section{
+  margin-top: 24px;
+}
+
+.cv-list{
+  margin: 8px 0 14px;
+}
+
+.cv-entry{
+  padding: 12px 0 14px;
+  border-bottom: 1px solid var(--hr);
+}
+.cv-entry:last-child{
+  border-bottom: 0;
+}
+
+.cv-entry-top{
+  display:grid;
+  grid-template-columns: minmax(0, 1fr) var(--datew);
+  column-gap: 28px;
+  align-items:start;
+}
+
+.cv-entry-main{
+  min-width: 0;
+}
+
+.cv-title{
+  font-weight: 700;
   line-height: 1.35;
 }
-.edu .dates .when{ font-weight:700; color:var(--fg); }
-.edu .dates .where{ font-style:italic; }
-.edu .item .school{ font-weight:700; }
-.edu .item .degree{ margin-top:2px; }
-.edu .item .courses{ margin-top:2px; font-style:italic; }
-@media (max-width:680px){
-  .edu{ grid-template-columns:1fr !important; }
+
+.cv-subtitle{
+  margin-top: 2px;
 }
-/* Relevant coursework line */
+
+.cv-meta{
+  align-self:start;
+  text-align:right;
+  font-family: var(--mono);
+  line-height: 1.35;
+}
+.cv-date{
+  font-weight:700;
+  color:var(--fg);
+}
+.cv-location{
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.cv-bullets{
+  margin: 7px 0 0 18px;
+}
+.cv-bullets li{
+  margin: 6px 0;
+}
+
 .courses-line{
-  margin-top: 4px;
+  margin-top: 7px;
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
 }
-
 .courses-label{
-  font-style: normal;      /* НЕ курсив */
+  font-style: normal;
   color: var(--muted);
   font-family: var(--mono);
   white-space: nowrap;
 }
-
-/* Smaller pills for coursework */
 .pills.small{
   display: inline-flex;
   flex-wrap: wrap;
   gap: 6px;
   margin: 0;
 }
-
 .pills.small .pill{
   font-size: .82rem;
   padding: 2px 8px;
   line-height: 1.2;
 }
-/* ===== EXPERIENCE GRID (same style as Education) ===== */
-.exp{
-  display:grid !important;
-  grid-template-columns: 170px 1fr !important;
-  gap: 10px 18px !important;
-  margin: 10px 0 14px !important;
+
+.skill-list{
+  margin: 8px 0 14px;
+}
+.skill-group{
+  padding: 2px 0 10px;
+}
+.skill-group h3{
+  margin: 10px 0 6px;
 }
 
-.exp .dates{
-  font-family: var(--mono);
-  color: var(--muted);
-  line-height: 1.35;
+.certificate-link{
+  text-decoration:none;
 }
-.exp .dates .when{ font-weight:700; color:var(--fg); }
-.exp .dates .where{ font-style:normal; }
-
-.exp .item .school{ font-weight:700; }
-.exp .item .degree{ margin-top:2px; }
-
-.exp .bullets{
-  margin: 6px 0 0 18px;
-}
-.exp .bullets li{
-  margin: 6px 0;
+.certificate-link:hover{
+  text-decoration:underline;
 }
 
-@media (max-width:680px){
-  .exp{ grid-template-columns:1fr !important; }
+.kv{
+  white-space: pre-line;
+  margin-left: 0;
 }
+
+.typing-cursor{
+  display:inline-block;
+  margin-left:2px;
+  animation: typingBlink 1s steps(1,end) infinite;
+}
+@keyframes typingBlink{
+  0%,50%{ opacity:1; }
+  50.01%,100%{ opacity:0; }
+}
+
+@media (max-width: 700px){
+  .header-row{ gap:14px; }
+  .header-photo{ width:96px; height:96px; }
+}
+
+@media (max-width: 680px){
+  .cv-page{ --datew: 1fr; }
+  .cv-entry-top{
+    grid-template-columns: 1fr;
+    row-gap: 4px;
+  }
+  .cv-meta{
+    text-align:left;
+    display:flex;
+    flex-wrap:wrap;
+    gap: 4px 12px;
+  }
+  .cv-location{
+    margin-top:0;
+  }
+}
+
+@media (max-width: 600px){
+  .container{ margin-top: 30px; }
+  .site-title{ font-size: 1.9rem; }
+  .embed{ height: 720px; }
+}
+
 @media (max-width: 520px){
   .header-row{
     flex-direction: row !important;
@@ -259,7 +345,7 @@ li{ margin: 6px 0; }
     height: 96px;
     border-radius: 14px;
     object-fit: cover;
-    object-position: 50% 18%; /* photo up */
+    object-position: 50% 18%;
     flex: 0 0 auto;
   }
 
@@ -275,7 +361,6 @@ li{ margin: 6px 0; }
     margin: 0 0 6px;
   }
 
-  /* Bio reduction */
   .taglines{
     margin: 0 0 10px;
     font-size: 0.92rem;
@@ -288,85 +373,4 @@ li{ margin: 6px 0; }
     margin: 10px 0 18px;
     gap: 12px;
   }
-}
-/* ===== HONORS GRID (same style as Education/Experience) ===== */
-.hon{
-  display:grid !important;
-  grid-template-columns: 170px 1fr !important;
-  gap: 10px 18px !important;
-  margin: 10px 0 14px !important;
-}
-
-.hon .dates{
-  font-family: var(--mono);
-  color: var(--muted);
-  line-height: 1.35;
-}
-.hon .dates .when{ font-weight:700; color:var(--fg); }
-
-.hon .item .school{ font-weight:700; }
-.hon .item .degree{ margin-top:2px; }
-
-@media (max-width:680px){
-  .hon{ grid-template-columns: 1fr !important; }
-}
-/* ===== ACHIEVEMENTS GRID (same style as Education) ===== */
-.ach{
-  display:grid !important;
-  grid-template-columns: 170px 1fr !important;
-  gap: 10px 18px !important;
-  margin: 10px 0 14px !important;
-}
-
-.ach .dates{
-  font-family: var(--mono);
-  color: var(--muted);
-  line-height: 1.35;
-}
-.ach .dates .when{ font-weight:700; color:var(--fg); }
-.ach .dates .where{ font-style: normal; }   /* ✅ add this like Education */
-
-.ach .item .school{ font-weight:700; }
-.ach .item .degree{ margin-top:2px; }       /* ✅ add this like Education */
-.ach .item .courses{ margin-top:2px; font-style: normal; } /* optional */
-
-.ach .bullets{
-  margin: 6px 0 0 18px;
-}
-.ach .bullets li{
-  margin: 6px 0;
-}
-
-@media (max-width:680px){
-  .ach{ grid-template-columns: 1fr !important; }
-}
-
-/* Typing effect cursor */
-.typing-cursor{
-  display:inline-block;
-  margin-left:2px;
-  animation: typingBlink 1s steps(1,end) infinite;
-}
-@keyframes typingBlink{
-  0%,50%{ opacity:1; }
-  50.01%,100%{ opacity:0; }
-}
-/* Skills grid = same style as Education/Experience */
-.skills{
-  display:grid !important;
-  grid-template-columns: 170px 1fr !important;
-  gap: 10px 18px !important;
-  margin: 10px 0 14px !important;
-}
-
-.skills .dates{
-  font-family: var(--mono);
-  color: var(--muted);
-  line-height: 1.35;
-}
-.skills .dates .when{ font-weight:700; color:var(--fg); }
-
-@media (max-width:680px){
-  .skills{ grid-template-columns:1fr !im.pc-section {
-  margin-top: 24px;
 }
