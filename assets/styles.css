@@ -461,5 +461,5 @@ li{ margin: 6px 0; }
 
 /* Make pill text the same color as links */
 .pill {
-  color: var(--link-color);
+  color: var(--link);
 }
