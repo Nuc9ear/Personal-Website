@@ -458,3 +458,8 @@ li{ margin: 6px 0; }
     text-align:left !important;
   }
 }
+
+/* Make pill text the same color as links */
+.pill {
+  color: var(--link-color);
+}
