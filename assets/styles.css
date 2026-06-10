@@ -7,14 +7,27 @@
   --hr:#ddd;
   --soft:#f7f7f7;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-  --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  --sans: var(--mono);
 }
 
-*{ box-sizing:border-box; }
+*{ 
+  box-sizing:border-box;
+}
+
+html,
+body,
+button,
+input,
+textarea,
+select {
+  font-family: var(--mono);
+}
+
 html,body{ height:100%; }
+
 body{
   margin:0;
-  font-family: var(--sans);
+  font-family: var(--mono);
   background: var(--bg);
   color: var(--fg);
   line-height: 1.55;
@@ -123,7 +136,7 @@ li{ margin: 6px 0; }
   border: 1px solid var(--hr);
   border-radius: 999px;
   padding: 4px 10px;
-  color: var(--muted);
+  color: var(--link);
 }
 
 .embed{
@@ -457,9 +470,4 @@ li{ margin: 6px 0; }
     grid-column:1 !important;
     text-align:left !important;
   }
-}
-
-/* Make pill text the same color as links */
-.pill {
-  color: var(--link);
 }
